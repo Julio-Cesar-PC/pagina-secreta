@@ -1,3 +1,4 @@
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,6 +7,18 @@
     <title>Admin</title>
 </head>
 
+<?php
+require_once __DIR__ . '/src/usersDB.php';
+
+$db = new usersDB;
+
+
+
+session_start();
+
+
+?>
+
 <body class="bg-gray-900 flex justify-center">
     <div class="h-screen flex flex-col gap-4 justify-center">
         <div class="w-full max-w-xs">
@@ -13,18 +26,19 @@
                 <div class="mb-4">
                     <h1 class="text-center text-2xl font-bold">Admin panel</h1>
                 </div>
-                <?php
+                <?php 
+                echo $_SESSION['username'] . '<br>';
 
-                if ($_REQUEST['password'] === '1234') {
-                    echo "Olá :) \r\n";
-                    echo $_REQUEST['username'] . ' ' . $_REQUEST['password'];
+                if ($_SESSION['admin'] == true) {
+                    echo 'You are admin';
+                    echo '<img class="mb-4" src="../public/giphy.gif" alt="">';
                 } else {
-                    echo "Não entou :(";
+                    echo 'You are not admin';
                 }
                 ?>
-                <img class="mb-4" src="giphy.gif" alt="">
+                <!-- <img class="mb-4" src="../public/giphy.gif" alt=""> -->
                 <div class="flex justify-center">
-                    <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <a href="/src/logoutHandler.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Logout
                     </a>
                 </div>
