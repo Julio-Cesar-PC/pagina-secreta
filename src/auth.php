@@ -15,6 +15,7 @@ class auth {
             foreach($data as $row) {
                 if($_SESSION['username'] == $row['username'] && $_SESSION['password'] == $row['password'] && $row['isAdmin'] == 1) {
                     $_SESSION['admin'] = true;
+                    $_SESSION['user_id'] = $row['id'];
                 }
             }
         } catch(PDOException $e) {

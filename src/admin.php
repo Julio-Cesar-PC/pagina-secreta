@@ -8,15 +8,26 @@
 </head>
 
 <?php
-require_once __DIR__ . '/src/usersDB.php';
+require_once __DIR__ . '/usersDB.php';
 
 $db = new usersDB;
 
+$user = $db->getUser($_SESSION['user_id']);
 
+if ($user['role'] == 'admin') {
+    require_once __DIR__ . '/admin.php';
+} else {
+    require_once __DIR__ . '/auth.php';
+}
+echo '<p class="text-white text-center text-2xl font-bold">Welcome, ' . $user['username'];
+echo ' | user id: ' . $user['id'] . '<br>';
+echo 'username: ' . $user['username'] . '<br>';
+echo 'password: ' . $user['password'] . '<br>';
+echo 'isAdmin: ' . $user['isAdmin'] . '<br>';
+echo 'changePass: ' . $user['changePass'] . '<br>';
+echo '</p>';
 
 session_start();
-
-
 ?>
 
 <body class="bg-gray-900 flex justify-center">
