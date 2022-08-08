@@ -1,3 +1,18 @@
+<?php
+require_once __DIR__ . '/utils.php';
+require_once __DIR__ . '/DB.php';
+
+$db = new DB();
+$user = $db->getUser($_SESSION['userId']);
+
+session_start();
+
+if (validateToken($_SESSION['csrfToken']) && $user['changePass'] == 0) {
+    header('location: /admin');
+}
+
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,14 +30,12 @@
                 <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm3 5.753l-6.44 5.247 6.44 5.263-.678.737-7.322-6 7.335-6 .665.753z"/>
             </svg>
         </button>
-        <h2 class="mb-10 text-center text-2xl font-bold">Register</h2>
-        <form class="flex flex-col gap-4" action="/src/registerRequest.php" method="POST">
+        <h2 class="mb-10 text-center text-2xl font-bold">Change password</h2>
+        <form class="flex flex-col gap-4" action="/src/changePasswordRequest.php" method="POST">
 
-            <input class="rounded-xl p-1" type="text" name="username" placeholder="Username">
+            <input class="rounded-xl p-1" type="password" name="oldPassword" placeholder="Old password">
 
-            <input class="rounded-xl p-1" type="password" name="password" placeholder="Password">
-
-            <input class="rounded-xl p-1" type="password" name="confirmPassword" placeholder="Confirm password">
+            <input class="rounded-xl p-1" type="password" name="newPassword" placeholder="New password">
 
             <p class="text-red-500 text-center">
                 <?php
@@ -33,7 +46,6 @@
                 }
                 ?>
             </p>
-
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Register
             </button>

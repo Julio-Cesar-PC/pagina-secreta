@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/RouteSwitch.php';
 require_once __DIR__ . '/auth.php';
 
@@ -11,22 +10,31 @@ class Router extends RouteSwitch
 
         switch ($route) {
             case '':
-                $this->index();
+                $this->login();
                 break;
+
             case 'admin':
-                session_start();
-                $auth = new auth();
-                $auth->auth();
-                if($_SESSION['admin']) {
+                auth();
+                if ($_SESSION['admin']) {
                     $this->admin();
                 } else {
                     header('HTTP/1.1 401 Unauthorized');
                     die(401);
                 }
                 break;
+
             case 'register':
                 $this->register();
                 break;
+
+            case 'user-panel':
+                $this->userPanel();
+                break;
+
+            case 'changePassword':
+                $this->changePassword();
+                break;
+
             default:
                 $this->__call($route, []);
                 break;

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/DB.php';
+require_once 'src/DB.php';
 
 $db = new DB();
 $user = $db->getUser($_SESSION['userId']);
@@ -24,15 +24,17 @@ if ($user['changePass'] == 1) {
     <div class="w-full max-w-xs">
         <div class="bg-gray-200 shadow-md rounded-xl px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
-                <h1 class="text-center text-2xl font-bold">Admin panel</h1>
+                <h1 class="text-center text-2xl font-bold">User panel</h1>
             </div>
             <?php
             echo '<p class="text-center text-md font-bold">Hello, ' . $user['username'] . ' :) </p>';
+
             if ($_SESSION['admin'] == true) {
                 echo 'You are admin';
                 echo '<img class="mb-4" src="../public/giphy.gif" alt="">';
             } else {
-                echo 'You are not admin';
+                echo 'You are not the admin';
+                echo '<img class="mb-4" src="/public/user.gif" alt="">';
             }
             ?>
             <div class="flex justify-center">
